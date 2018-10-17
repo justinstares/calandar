@@ -1,0 +1,80 @@
+<!--https://code.tutsplus.com/tutorials/how-to-build-a-beautiful-calendar-widget--net-12538-->
+<!DOCTYPE <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Events Calendar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="calendarStyle.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="cScript.js"></script>
+</head>
+<body>
+    <div id="calendar">
+        <div class="calHead">
+            <span class="switch left" id="previous"> &lang; </span>
+            <span class="month" id="monthLabel"> October 2018 </span>
+            <span class="switch right" id="next"> &rang; </span>
+        </div>
+        <table id="days">
+            <tr>
+                <td>sun</td>
+                <td>mon</td>
+                <td>tue</td>
+                <td>wed</td>
+                <td>thu</td>
+                <td>fri</td>
+                <td>sat</td>
+            </tr>
+        </table>
+        <div id="grid">
+            <table class="current">
+                <tr id="w0"></tr>
+                <tr id="w1"></tr>
+                <tr id="w2"></tr>
+                <tr id="w3"></tr>
+                <tr id="w4"></tr>
+                <tr id="w5"></tr>
+            </table>
+        </div>
+    </div>
+    <input type="button" class="button" id="login" value="Login/Register"/>
+    <div id="loginDialog" title="Login/Register">
+        <p id="success" class="off">Registration successful! Please log in.</p>
+        <label for="user"><b>Username:</b></label><br>
+        <input type="text" placeholder="Input Username" name="user" id="user" maxlength="255" required/><br>
+        <label for="pass"><b>Password:</b></label><br>
+        <input type="password" placeholder="Input Password" name="pass" id="pass" maxlength="255" required/><br>
+        <button class="button" id="login_btn">Login</button><br>
+        <label for="newAcc"><b>New member? Create an account</b></label><br>
+        <button class="button buttonPurple" id="newAcc">Register</button>
+    </div>
+    <div id="registerDialog" title="Register a New Account">
+        <label for="user"><b>Username:</b></label><br>
+        <input type="text" placeholder="Input Username" name="newUser" id="newUser" maxlength="255" required/><br>
+        <label for="pass"><b>Password:</b></label><br>
+        <input type="password" placeholder="Input Password" name="newPass" id="newPass" maxlength="255" required/><br>
+        <button class="button" id="reg_btn">Register</button><br>
+    </div>
+    <div id="eventDialog" title="Add a new event">
+        <label for="eventTitle"><b>Title:</b></label>
+        <input type="text" placeholder="Add a title to your event" name="eventTitle" id="eventTitle" maxlength="255" required/><br>
+        <label for="eventDate"><b>Date:</b></label>
+        <input type="date" name="eventDate" id="eventDate" required/><br>
+        <label for="eventTime"><b>Time:</b></label>
+        <input type="time" name="eventTime" id="eventTime" required/><br>
+        <button class="button buttonGreen" id="event_btn">Add event</button>
+    </div>
+    <div id="dayEvents" title="Here are the events for ">
+        <p id="noEvents"><b>No events for today</b></p>
+        <ul id="eventsList" class="off">
+
+        </ul>
+    </div>
+    <input type="button" class="button off" id="logout" value="Logout"/>
+    <input type="button" class="button buttonGreen off" id="addEvent" value="New event"/>
+</body>
+</html>
