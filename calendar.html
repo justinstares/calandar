@@ -1,4 +1,3 @@
-<!--https://code.tutsplus.com/tutorials/how-to-build-a-beautiful-calendar-widget--net-12538-->
 <!DOCTYPE <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,16 +62,41 @@
         <label for="eventTitle"><b>Title:</b></label>
         <input type="text" placeholder="Add a title to your event" name="eventTitle" id="eventTitle" maxlength="255" required/><br>
         <label for="eventDate"><b>Date:</b></label>
-        <input type="date" name="eventDate" id="eventDate" required/><br>
+        <!-- <input type="date" name="eventDate" id="eventDate" class="validate[required]" value="" />
+        <input type="text" id="alt-date" /> -->
+        <input type="text" name="begin-date" id="begin-date" class="validate[required]" value="" />
+        <input type="hidden" id="alt-date" />
+        <script>
+
+        $("#begin-date").datepicker({
+          minDate: -20,
+          maxDate: "+1M +10D",
+          dateFormat: "yy-mm-dd",
+          altFormat: "mm-dd-yy",
+          altField: "#alt-date"
+        });
+
+        </script>
+        <!-- <input type="date" name="eventDate" id="eventDate" required/><br> -->
+
         <label for="eventTime"><b>Time:</b></label>
         <input type="time" name="eventTime" id="eventTime" required/><br>
         <button class="button buttonGreen" id="event_btn">Add event</button>
     </div>
+    <div id="editEventDialog" title="Edit your event">
+      <label for="newTitle"><b>Title:</b></label>
+      <input type="text" placeholder="Add a title to your event" name="newTitle" id="newTitle" maxlength="255" required/><br>
+      <label for="newTime"><b>Time:</b></label>
+      <input type="time" name="newTime" id="newTime" required/><br>
+      <button class="button buttonGreen" id="newEvent_btn">Edit event</button>
+    </div>
     <div id="dayEvents" title="Here are the events for ">
         <p id="noEvents"><b>No events for today</b></p>
-        <ul id="eventsList" class="off">
 
-        </ul>
+        <div id="userEvents">
+          <ul id="eventsList">
+          </ul>
+        </div>
     </div>
     <input type="button" class="button off" id="logout" value="Logout"/>
     <input type="button" class="button buttonGreen off" id="addEvent" value="New event"/>

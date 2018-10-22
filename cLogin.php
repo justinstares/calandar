@@ -21,10 +21,12 @@ $pwd_guess = $mysqli->real_escape_string($json_obj['pass']);
 if($cnt == 1 && password_verify($pwd_guess, $hashed_password)){
     session_start();
     $_SESSION['userID'] = $userID;
+    //csrf token
     $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(32));
 
     echo json_encode(array(
-        "success" => true
+        "success" => true,
+        "token" => $_SESSION['token']
     ));
     exit;
 }else{

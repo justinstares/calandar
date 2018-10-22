@@ -140,6 +140,11 @@ form {
     background-color: #008CBA;
 }
 
+.buttonRed {
+  color: white;
+  background-color: rgb(243, 62, 62);
+}
+
 
  .buttonPurple {
     color: white;
@@ -159,6 +164,10 @@ form {
 }
 
 #eventDialog {
+    display: none;
+}
+
+#editEventDialog {
     display: none;
 }
 
