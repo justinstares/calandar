@@ -8,6 +8,7 @@ let currentMonth = new Month(2018, 9);
 let monthsArr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 let loggedIn = false;
 let token = null;
+let currID = null;
 
 //array of day IDs for current month. Will be cleared and repopulated with each change in month
 //userIdArray is array of 1-indexed day ids to be displayed to user
@@ -90,6 +91,8 @@ $(document).ready(function(){
 
     //listener for submitting event form
     document.getElementById("event_btn").addEventListener("click", eventAjax, false);
+
+    document.getElementById("newEvent_btn").addEventListener("click", function(){editCallback(currID);}, false);
 
 
 //----------------------------------------------------------------------------------------------------------------
@@ -205,7 +208,15 @@ $(document).ready(function(){
                   $("<button id=\""+edID+"\" class=\"buttonBlue\">Edit</button>").appendTo("#userEvents");
 
                   deleteCallback(id);
-                  editCallback(id);
+
+                  document.getElementById(edID).addEventListener("click", function(){
+                    $("#editEventDialog").dialog({
+                        height: 400,
+                        width: 500
+                    });
+
+                    currID = id;
+                  }, false);
 
                 }
 
@@ -245,14 +256,7 @@ $(document).ready(function(){
     }
 
     function editCallback(id){
-      document.getElementById("ed"+id).addEventListener("click", function(){
-        $("#editEventDialog").dialog({
-            height: 400,
-            width: 500
-        });
-      }, false);
 
-      document.getElementById("newEvent_btn").addEventListener("click", function(){
         const title = document.getElementById("newTitle").value;
         const time = document.getElementById("newTime").value;
 
@@ -272,9 +276,10 @@ $(document).ready(function(){
                 $("#editEventDialog").dialog("close");
                 $("#dayEvents").dialog("close");
                 updateCalendar();
+                //alert(id);
             }
         });
-      }, false);
+
       //updateCalendar();
       getEventAjax();
     }
@@ -342,6 +347,7 @@ $(document).ready(function(){
                 $("#login").removeClass("off");
                 $("#addEvent").addClass("off");
                 token = null;
+                currID = null;
                 updateCalendar();
             }
         });
