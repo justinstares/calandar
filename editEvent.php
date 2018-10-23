@@ -51,11 +51,11 @@ if(!hash_equals($_SESSION['token'], $token)){
 
 $post_ID = $json_obj['id'];
 $user_ID = $_SESSION['userID'];
-$title = mysqli->real_escape_string($json_obj['title']);
-$time = mysqli->real_escape_string($json_obj['time']);
+$title = $mysqli->real_escape_string($json_obj['title']);
+$time = $mysqli->real_escape_string($json_obj['time']);
 
 
-$stmt = $mysqli->prepare("update events set title=? time=? where username=? and id=?");
+$stmt = $mysqli->prepare("update events set title=?, time=? where username=? and id=?");
 if(!$stmt){
     echo json_encode(array(
       "success" => false,
