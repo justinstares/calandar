@@ -29,6 +29,15 @@ $(document).ready(function(){
 //EVENT LISTENERS----------------------------------------------------------------------------------------------------------------
 
     //listener for clicking next month button
+    document.getElementById("date_btn").addEventListener("click", function(event){
+        currentMonth = currentMonth.nextMonth();
+        idArray = [];
+        userIdArray = [];
+        updateCalendar();
+        //getEventAjax();
+    }, false);
+
+    //listener for clicking next month button
     document.getElementById("next").addEventListener("click", function(event){
         currentMonth = currentMonth.nextMonth();
         idArray = [];
@@ -242,7 +251,7 @@ $(document).ready(function(){
             width: 500
         });
       }, false);
-      
+
       document.getElementById("newEvent_btn").addEventListener("click", function(){
         const title = document.getElementById("newTitle").value;
         const time = document.getElementById("newTime").value;
@@ -289,6 +298,8 @@ $(document).ready(function(){
                 $("#login").addClass("off");
                 $("#logout").removeClass("off");
                 $("#addEvent").removeClass("off");
+                $("#dateSwitch").removeClass("off");
+
                 //console.log("hello " + data.token);
 
 

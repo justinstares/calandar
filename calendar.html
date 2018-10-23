@@ -67,7 +67,6 @@
         <input type="text" name="begin-date" id="begin-date" class="validate[required]" value=""/>
         <input type="hidden" id="alt-date"/><br>
         <script>
-
         $("#begin-date").datepicker({
           minDate: -20,
           maxDate: "+1M +10D",
@@ -75,7 +74,6 @@
           altFormat: "mm-dd-yy",
           altField: "#alt-date"
         });
-
         </script>
         <!-- <input type="date" name="eventDate" id="eventDate" required/><br> -->
 
@@ -83,6 +81,7 @@
         <input type="time" name="eventTime" id="eventTime" required/><br>
         <button class="button buttonGreen" id="event_btn">Add event</button>
     </div>
+
     <div id="editEventDialog" title="Edit your event">
       <label for="newTitle"><b>Title:</b></label>
       <input type="text" placeholder="Add a title to your event" name="newTitle" id="newTitle" maxlength="255" required/><br>
@@ -97,6 +96,21 @@
           <ul id="eventsList">
           </ul>
         </div>
+    </div>
+    <div id="dateSwitch" class="off" title="Jump to this day">
+      <label for="begin-date2"><b>Jump to this day</b></label>
+      <input type="text" name="begin-date2" id="begin-date2" class="validate[required]" value=""/>
+      <input type="hidden" id="alt-date2"/>
+      <script>
+      $("#begin-date2").datepicker({
+        minDate: -20,
+        maxDate: "+1M +10D",
+        dateFormat: "yy-mm-dd",
+        altFormat: "mm-dd-yy",
+        altField: "#alt-date2"
+      });
+      </script>
+      <button id="date_btn">Submit</button><br>
     </div>
     <input type="button" class="button off" id="logout" value="Logout"/>
     <input type="button" class="button buttonGreen off" id="addEvent" value="New event"/>
