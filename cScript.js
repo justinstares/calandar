@@ -254,11 +254,15 @@ $(document).ready(function(){
             body: JSON.stringify(data),
             headers: {'content-type': 'application/json'}
         })
+        //.then(response => response.text())
+        //.then(text => console.log(text))
         .then(response => response.json())
         .then(data => {
             console.log(data.success ? "Event edited successfully!" : `Your event was not edited: ${data.message}`);
             if(data.success){
-              //dont know what to do here
+                $("#editEventDialog").dialog("close");
+                $("#dayEvents").dialog("close");
+                updateCalendar();
             }
         });
       }, false);
