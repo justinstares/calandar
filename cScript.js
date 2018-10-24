@@ -9,6 +9,7 @@ let monthsArr = ["January", "February", "March", "April", "May", "June", "July",
 let loggedIn = false;
 let token = null;
 let currID = null;
+let date2 = null;
 
 //array of day IDs for current month. Will be cleared and repopulated with each change in month
 //userIdArray is array of 1-indexed day ids to be displayed to user
@@ -31,7 +32,8 @@ $(document).ready(function(){
 
     //listener for changing month/year
     document.getElementById("date_btn").addEventListener("click", function(event){
-        const date2 = document.getElementById("alt-date2").value;
+        date2 = document.getElementById("alt-date2").value;
+        alert(date2);
         let year = date2.substr(date2.length - 4);
         let month = date2.substring(0,2);
         let yearN = parseInt(year, 10);
@@ -41,6 +43,10 @@ $(document).ready(function(){
         userIdArray = [];
         updateCalendar();
         getEventAjax();
+        $("#"+date2).addClass("highlight");
+
+
+
     }, false);
 
     //listener for clicking next month button
@@ -50,6 +56,8 @@ $(document).ready(function(){
         userIdArray = [];
         updateCalendar();
         getEventAjax();
+        $("#"+date2).removeClass("highlight");
+
     }, false);
 
     //listener for clicking previous month button
@@ -59,6 +67,8 @@ $(document).ready(function(){
         userIdArray = [];
         updateCalendar();
         getEventAjax();
+        $("#"+date2).removeClass("highlight");
+
     }, false);
 
     //listener for clicking login button
@@ -139,19 +149,34 @@ $(document).ready(function(){
                 let userDayMonth = dayMonth + 1;
 
 
-                if(dayDate < 10){
+                if(userDayMonth < 10 && dayDate < 10){
+                  n = dayDate.toString();
+                  n = "0" + n;
+                  m = userDayMonth.toString();
+                  m = "0" + m;
+                  userDayId = m+"-"+n+"-"+year;
+                }
+                // else {
+                //   userDayId = userDayMonth+"-"+dayDate+"-"+year;
+                // }
+                else if(userDayMonth >= 10 && dayDate >= 10){
+                  n = userDayMonth.toString();
+                  n = "0" + n;
+                  userDayId = userDayMonth+"-"+dayDate+"-"+year;
+                }
+
+                else if(userDayMonth >= 10 && dayDate < 10){
                   n = dayDate.toString();
                   n = "0" + n;
                   userDayId = userDayMonth+"-"+n+"-"+year;
-                }else {
-                  userDayId = userDayMonth+"-"+dayDate+"-"+year;
                 }
-                if(userDayMonth < 10){
-                  j = userDayMonth.toString();
-                  j = "0" + j;
-                  userDayId = j+"-"+dayDate+"-"+year;
-                }else {
-                  userDayId = userDayMonth+"-"+dayDate+"-"+year;
+                else if(userDayMonth < 10 && dayDate >= 10){
+                  n = userDayMonth.toString();
+                  n = "0" + n;
+                  userDayId = n+"-"+dayDate+"-"+year;
+                }
+                else{
+                  //do nothing
                 }
 
 
@@ -291,22 +316,22 @@ $(document).ready(function(){
                         let time = data.events[i].time;
                         let date = data.events[i].date;
                         let id = data.events[i].eventID;
-      
+
                         let delID = "del"+id;
                         let edID = "eda"+id;
                         let tiID = "ti"+id;
                         let tmID = "tm"+id;
                         let dayID = "day"+id;
-      
+
                         let shID = "sh"+id;
-      
+
                         $("<p id=\""+tiID+"\"><b>"+title+"</b></p>").appendTo("#allUserEvents");
                         $("<ul id=\""+tmID+"\"><li>"+date+"</li><li>"+time+"</li></ul>").appendTo("#allUserEvents");
                         $("<button id=\""+delID+"\" class=\"buttonRed\">Delete</button>").appendTo("#allUserEvents");
                         $("<button id=\""+edID+"\" class=\"buttonBlue\">Edit</button>").appendTo("#allUserEvents");
                         $("<button id=\""+shID+"\" class=\"buttonPurple\">Share</button>").appendTo("#allUserEvents");
-      
-      
+
+
                         deleteCallback(id);
 
                         document.getElementById(edID).addEventListener("click", function(){
@@ -315,23 +340,23 @@ $(document).ready(function(){
                                 height: 400,
                                 width: 500
                             });
-        
+
                             currID = id;
                           }, false);
-        
+
                           document.getElementById(shID).addEventListener("click", function(){
                             $("#shareEventDialog").dialog({
                                 height: 400,
                                 width: 500
                             });
-        
+
                             currID = id;
                           }, false);
-        
+
                     }
                 }else if(data.events.length == 0){
                     if($("#noEventsAll").hasClass("off")){
-                        $("#noEventsAll").removeClass("off"); 
+                        $("#noEventsAll").removeClass("off");
                     }
                 }
             }

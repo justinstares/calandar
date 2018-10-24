@@ -181,3 +181,6 @@ form {
 #allDayEvents {
     display: none;
 }
+.highlight {
+   background-color: #B16FCD;
+}
