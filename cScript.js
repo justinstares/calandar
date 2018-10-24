@@ -29,7 +29,7 @@ $(document).ready(function(){
 
 //EVENT LISTENERS----------------------------------------------------------------------------------------------------------------
 
-    //listener for clicking next month button
+    //listener for changing month/year
     document.getElementById("date_btn").addEventListener("click", function(event){
         const date2 = document.getElementById("alt-date2").value;
         let year = date2.substr(date2.length - 4);
@@ -40,7 +40,7 @@ $(document).ready(function(){
         idArray = [];
         userIdArray = [];
         updateCalendar();
-        //getEventAjax();
+        getEventAjax();
     }, false);
 
     //listener for clicking next month button
@@ -49,7 +49,7 @@ $(document).ready(function(){
         idArray = [];
         userIdArray = [];
         updateCalendar();
-        //getEventAjax();
+        getEventAjax();
     }, false);
 
     //listener for clicking previous month button
@@ -58,7 +58,7 @@ $(document).ready(function(){
         idArray = [];
         userIdArray = [];
         updateCalendar();
-        //getEventAjax();
+        getEventAjax();
     }, false);
 
     //listener for clicking login button
@@ -135,6 +135,8 @@ $(document).ready(function(){
                 let dayID = ""
                 let userDayId = "";
                 let userDayMonth = dayMonth + 1;
+
+
                 if(dayDate < 10){
                   n = dayDate.toString();
                   n = "0" + n;
@@ -142,6 +144,14 @@ $(document).ready(function(){
                 }else {
                   userDayId = userDayMonth+"-"+dayDate+"-"+year;
                 }
+                if(userDayMonth < 10){
+                  j = userDayMonth.toString();
+                  j = "0" + j;
+                  userDayId = j+"-"+dayDate+"-"+year;
+                }else {
+                  userDayId = userDayMonth+"-"+dayDate+"-"+year;
+                }
+
 
                 //day ID with 1-indexed month to be displayed to user
 
@@ -453,7 +463,7 @@ $(document).ready(function(){
                 // $("#noEvents").removeClass("off");
 
                 updateCalendar();
-                //getEventAjax();
+                getEventAjax();
                 //need to add event to calendar here. Probably using updateCalendar() but idk yet
 
             }
