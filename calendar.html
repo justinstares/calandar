@@ -1,4 +1,4 @@
-<!DOCTYPE <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -31,12 +31,12 @@
         </table>
         <div id="grid">
             <table class="current">
-                <tr id="w0"></tr>
-                <tr id="w1"></tr>
-                <tr id="w2"></tr>
-                <tr id="w3"></tr>
-                <tr id="w4"></tr>
-                <tr id="w5"></tr>
+                <tr id="w0"><td class="off"></td></tr>
+                <tr id="w1"><td class="off"></td></tr>
+                <tr id="w2"><td class="off"></td></tr>
+                <tr id="w3"><td class="off"></td></tr>
+                <tr id="w4"><td class="off"></td></tr>
+                <tr id="w5"><td class="off"></td></tr>
             </table>
         </div>
     </div>
@@ -61,7 +61,7 @@
     <div id="eventDialog" title="Add a new event">
         <label for="eventTitle"><b>Title:</b></label>
         <input type="text" placeholder="Add a title to your event" name="eventTitle" id="eventTitle" maxlength="255" required/><br>
-        <label for="eventDate"><b>Date:</b></label>
+        <label for="begin-date"><b>Date:</b></label>
         <!-- <input type="date" name="eventDate" id="eventDate" class="validate[required]" value="" />
         <input type="text" id="alt-date" /> -->
         <input type="text" name="begin-date" id="begin-date" class="validate[required]" value=""/>
@@ -102,6 +102,14 @@
           </ul>
         </div>
     </div>
+    <div id="allDayEvents" title="Here are all of your events">
+            <p id="noEventsAll"><b>No events</b></p>
+    
+            <div id="allUserEvents">
+              <ul id="allEventsList">
+              </ul>
+            </div>
+    </div>
     <div id="dateSwitch" class="off" title="Jump to this day">
       <label for="begin-date2"><b>Jump to this day</b></label>
       <input type="text" name="begin-date2" id="begin-date2" class="validate[required]" value=""/>
@@ -117,5 +125,6 @@
     </div>
     <input type="button" class="button off" id="logout" value="Logout"/>
     <input type="button" class="button buttonGreen off" id="addEvent" value="New event"/>
+    <input type="button" class="button buttonPurple off" id="allEvents" value="View all events"/>
 </body>
 </html>

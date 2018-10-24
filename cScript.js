@@ -102,6 +102,8 @@ $(document).ready(function(){
     document.getElementById("validate_btn").addEventListener("click", function(){userExists(currID);}, false);
     //document.getElementById("share_btn").addEventListener("click", function(){shareCallback(currID);}, false);
 
+    document.getElementById("allEvents").addEventListener("click", eventListAjax, false);
+
 
 
 //----------------------------------------------------------------------------------------------------------------
@@ -227,12 +229,13 @@ $(document).ready(function(){
                   $("<ul id=\""+tmID+"\"><li>"+time+"</li></ul>").appendTo("#userEvents");
                   $("<button id=\""+delID+"\" class=\"buttonRed\">Delete</button>").appendTo("#userEvents");
                   $("<button id=\""+edID+"\" class=\"buttonBlue\">Edit</button>").appendTo("#userEvents");
-                  $("<button id=\""+shID+"\" class=\"buttonRed\">Share</button>").appendTo("#userEvents");
+                  $("<button id=\""+shID+"\" class=\"buttonPurple\">Share</button>").appendTo("#userEvents");
 
 
                   deleteCallback(id);
 
                   document.getElementById(edID).addEventListener("click", function(){
+                      alert("edit");
                     $("#editEventDialog").dialog({
                         height: 400,
                         width: 500
@@ -261,6 +264,80 @@ $(document).ready(function(){
       });
     }
 
+    function eventListAjax(){
+        $("#allUserEvents").empty();
+        $("#allDayEvents").dialog({
+            height: 400,
+            width: 500
+        });
+        const data = {'token': token};
+
+        fetch("allEvents.php", {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {'content-type': 'application/json'}
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.success ? "Success!" : `Error: ${data.message}`);
+            if(data.success){
+                $("#allUserEvents").empty();
+                if(data.events.length > 0){
+                    $("#noEventsAll").addClass("off");
+
+                    for(let i in data.events){
+
+                        let title = data.events[i].title;
+                        let time = data.events[i].time;
+                        let date = data.events[i].date;
+                        let id = data.events[i].eventID;
+      
+                        let delID = "del"+id;
+                        let edID = "eda"+id;
+                        let tiID = "ti"+id;
+                        let tmID = "tm"+id;
+                        let dayID = "day"+id;
+      
+                        let shID = "sh"+id;
+      
+                        $("<p id=\""+tiID+"\"><b>"+title+"</b></p>").appendTo("#allUserEvents");
+                        $("<ul id=\""+tmID+"\"><li>"+date+"</li><li>"+time+"</li></ul>").appendTo("#allUserEvents");
+                        $("<button id=\""+delID+"\" class=\"buttonRed\">Delete</button>").appendTo("#allUserEvents");
+                        $("<button id=\""+edID+"\" class=\"buttonBlue\">Edit</button>").appendTo("#allUserEvents");
+                        $("<button id=\""+shID+"\" class=\"buttonPurple\">Share</button>").appendTo("#allUserEvents");
+      
+      
+                        deleteCallback(id);
+
+                        document.getElementById(edID).addEventListener("click", function(){
+                            alert("edit");
+                            $("#editEventDialog").dialog({
+                                height: 400,
+                                width: 500
+                            });
+        
+                            currID = id;
+                          }, false);
+        
+                          document.getElementById(shID).addEventListener("click", function(){
+                            $("#shareEventDialog").dialog({
+                                height: 400,
+                                width: 500
+                            });
+        
+                            currID = id;
+                          }, false);
+        
+                    }
+                }else if(data.events.length == 0){
+                    if($("#noEventsAll").hasClass("off")){
+                        $("#noEventsAll").removeClass("off"); 
+                    }
+                }
+            }
+        });
+    }
+
     function deleteCallback(id){
       document.getElementById("del"+id).addEventListener("click", function(){
         const data = {'id': id, 'token': token};
@@ -279,6 +356,7 @@ $(document).ready(function(){
               $("#ti"+id).remove();
               $("#del"+id).remove();
               $("#ed"+id).remove();
+              $("#eda"+id).remove();
               $("#sh"+id).remove();
               $("#"+id).remove();
             }
@@ -307,7 +385,8 @@ $(document).ready(function(){
             console.log(data.success ? "Event edited successfully!" : `Your event was not edited: ${data.message}`);
             if(data.success){
                 $("#editEventDialog").dialog("close");
-                $("#dayEvents").dialog("close");
+                //$("#dayEvents").dialog("close");
+                $(".ui-dialog-content").dialog("close");
                 updateCalendar();
                 //alert(id);
             }
@@ -362,7 +441,8 @@ $(document).ready(function(){
               console.log(data.success ? "Event shared successfully!" : `Your event was not shared: ${data.message}`);
                 if(data.success){
                     $("#shareEventDialog").dialog("close");
-                    $("#dayEvents").dialog("close");
+                    //$("#dayEvents").dialog("close");
+                    $(".ui-dialog-content").dialog("close");
                     updateCalendar();
                     alert("successfully added event to user: " + data.otherUser);
                 }
@@ -392,6 +472,7 @@ $(document).ready(function(){
                 $("#logout").removeClass("off");
                 $("#addEvent").removeClass("off");
                 $("#dateSwitch").removeClass("off");
+                $("#allEvents").removeClass("off");
 
                 //console.log("hello " + data.token);
 
@@ -435,6 +516,8 @@ $(document).ready(function(){
                 $("#login").removeClass("off");
                 $("#addEvent").addClass("off");
                 $("#dateSwitch").addClass("off");
+                $("#allEvents").addClass("off");
+                $(".ui-dialog-content").dialog("close");
                 token = null;
                 currID = null;
                 updateCalendar();

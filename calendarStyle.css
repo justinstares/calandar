@@ -177,3 +177,7 @@ form {
 #dayEvents {
     display: none;
 }
+
+#allDayEvents {
+    display: none;
+}
