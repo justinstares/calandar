@@ -33,7 +33,6 @@ $(document).ready(function(){
     //listener for changing month/year
     document.getElementById("date_btn").addEventListener("click", function(event){
         date2 = document.getElementById("alt-date2").value;
-        alert(date2);
         let year = date2.substr(date2.length - 4);
         let month = date2.substring(0,2);
         let yearN = parseInt(year, 10);
@@ -260,7 +259,7 @@ $(document).ready(function(){
                   deleteCallback(id);
 
                   document.getElementById(edID).addEventListener("click", function(){
-                      alert("edit");
+                      //alert("edit");
                     $("#editEventDialog").dialog({
                         height: 400,
                         width: 500
@@ -323,7 +322,7 @@ $(document).ready(function(){
                         let tmID = "tm"+id;
                         let dayID = "day"+id;
 
-                        let shID = "sh"+id;
+                        let shID = "sha"+id;
 
                         $("<p id=\""+tiID+"\"><b>"+title+"</b></p>").appendTo("#allUserEvents");
                         $("<ul id=\""+tmID+"\"><li>"+date+"</li><li>"+time+"</li></ul>").appendTo("#allUserEvents");
@@ -335,7 +334,7 @@ $(document).ready(function(){
                         deleteCallback(id);
 
                         document.getElementById(edID).addEventListener("click", function(){
-                            alert("edit");
+                            //alert("edit");
                             $("#editEventDialog").dialog({
                                 height: 400,
                                 width: 500
