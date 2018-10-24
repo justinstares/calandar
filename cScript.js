@@ -235,7 +235,7 @@ $(document).ready(function(){
                   deleteCallback(id);
 
                   document.getElementById(edID).addEventListener("click", function(){
-                      alert("edit");
+                      //alert("edit");
                     $("#editEventDialog").dialog({
                         height: 400,
                         width: 500
@@ -298,7 +298,7 @@ $(document).ready(function(){
                         let tmID = "tm"+id;
                         let dayID = "day"+id;
       
-                        let shID = "sh"+id;
+                        let shID = "sha"+id;
       
                         $("<p id=\""+tiID+"\"><b>"+title+"</b></p>").appendTo("#allUserEvents");
                         $("<ul id=\""+tmID+"\"><li>"+date+"</li><li>"+time+"</li></ul>").appendTo("#allUserEvents");
@@ -310,7 +310,7 @@ $(document).ready(function(){
                         deleteCallback(id);
 
                         document.getElementById(edID).addEventListener("click", function(){
-                            alert("edit");
+                            //alert("edit");
                             $("#editEventDialog").dialog({
                                 height: 400,
                                 width: 500
