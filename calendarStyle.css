@@ -170,6 +170,9 @@ form {
 #editEventDialog {
     display: none;
 }
+#shareEventDialog {
+    display: none;
+}
 
 #dayEvents {
     display: none;

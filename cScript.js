@@ -31,7 +31,12 @@ $(document).ready(function(){
 
     //listener for clicking next month button
     document.getElementById("date_btn").addEventListener("click", function(event){
-        currentMonth = currentMonth.nextMonth();
+        const date2 = document.getElementById("alt-date2").value;
+        let year = date2.substr(date2.length - 4);
+        let month = date2.substring(0,2);
+        let yearN = parseInt(year, 10);
+        let monthN = parseInt(month, 10);
+        currentMonth = new Month(yearN, (monthN-1));
         idArray = [];
         userIdArray = [];
         updateCalendar();
@@ -93,6 +98,10 @@ $(document).ready(function(){
     document.getElementById("event_btn").addEventListener("click", eventAjax, false);
 
     document.getElementById("newEvent_btn").addEventListener("click", function(){editCallback(currID);}, false);
+
+    document.getElementById("validate_btn").addEventListener("click", function(){userExists(currID);}, false);
+    //document.getElementById("share_btn").addEventListener("click", function(){shareCallback(currID);}, false);
+
 
 
 //----------------------------------------------------------------------------------------------------------------
@@ -202,15 +211,28 @@ $(document).ready(function(){
                   let tiID = "ti"+id;
                   let tmID = "tm"+id;
 
+                  let shID = "sh"+id;
+
                   $("<p id=\""+tiID+"\"><b>"+title+"</b></p>").appendTo("#userEvents");
                   $("<ul id=\""+tmID+"\"><li>"+time+"</li></ul>").appendTo("#userEvents");
                   $("<button id=\""+delID+"\" class=\"buttonRed\">Delete</button>").appendTo("#userEvents");
                   $("<button id=\""+edID+"\" class=\"buttonBlue\">Edit</button>").appendTo("#userEvents");
+                  $("<button id=\""+shID+"\" class=\"buttonRed\">Share</button>").appendTo("#userEvents");
+
 
                   deleteCallback(id);
 
                   document.getElementById(edID).addEventListener("click", function(){
                     $("#editEventDialog").dialog({
+                        height: 400,
+                        width: 500
+                    });
+
+                    currID = id;
+                  }, false);
+
+                  document.getElementById(shID).addEventListener("click", function(){
+                    $("#shareEventDialog").dialog({
                         height: 400,
                         width: 500
                     });
@@ -247,6 +269,7 @@ $(document).ready(function(){
               $("#ti"+id).remove();
               $("#del"+id).remove();
               $("#ed"+id).remove();
+              $("#sh"+id).remove();
               $("#"+id).remove();
             }
         });
@@ -283,6 +306,61 @@ $(document).ready(function(){
       //updateCalendar();
       getEventAjax();
     }
+
+    function userExists(id){
+      const otherUser = document.getElementById("otherUser").value;
+      const data = {'otherUser': otherUser, 'token': token};
+      fetch("userExists.php", {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {'content-type': 'application/json'}
+      })
+      // .then(response => response.text())
+      // .then(text => console.log(text))
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.success ? "User Exists" : `User does not exist: ${data.message}`);
+          if(data.success){
+          shareCallback(id);
+          return;
+          }
+          else{
+          alert("Invalid Username");
+          return false;
+          }
+        });
+
+
+
+    }
+
+    function shareCallback(id){
+            const otherUser = document.getElementById("otherUser").value;
+            const data = {'id': id, 'otherUser': otherUser, 'token': token};
+            fetch("shareEvent.php", {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {'content-type': 'application/json'}
+            })
+            // .then(response => response.text())
+            // .then(text => console.log(text))
+            .then(response => response.json())
+            .then(data => {
+              // console.log(data.success1 ? "Event query successful!" : `Your event was not queried: ${data.message1}`);
+              // console.log(`variable check: ${data.events[0][0]}`);
+              // console.log(`variable check: ${data.otherUser}`);
+              console.log(data.success ? "Event shared successfully!" : `Your event was not shared: ${data.message}`);
+                if(data.success){
+                    $("#shareEventDialog").dialog("close");
+                    $("#dayEvents").dialog("close");
+                    updateCalendar();
+                    alert("successfully added event to user: " + data.otherUser);
+                }
+            });
+
+    }
+
+
 
     function loginAjax(event){
         const username = document.getElementById("user").value;
@@ -346,6 +424,7 @@ $(document).ready(function(){
                 $("#logout").addClass("off");
                 $("#login").removeClass("off");
                 $("#addEvent").addClass("off");
+                $("#dateSwitch").addClass("off");
                 token = null;
                 currID = null;
                 updateCalendar();
