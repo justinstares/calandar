@@ -5,7 +5,7 @@
 # Instance Link
 http://ec2-54-91-247-153.compute-1.amazonaws.com/~pdirita/module5/calendar.html
 
-# Crearive Portion Description
+# Creative Portion Description
 * Clicking on a day will bring a logged-in user's events for that day up in a JQuery dialog
 * Logged-in users can jump to a specific date from an input field at the bottom of the calendar
 * The selected jump-to date will appear highlighted after a jump
